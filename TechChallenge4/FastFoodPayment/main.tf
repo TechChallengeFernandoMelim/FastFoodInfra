@@ -80,3 +80,7 @@ resource "aws_lambda_function" "fast_food_payment_management" {
   image_uri     = "${aws_ecr_repository.fast_food_payment.repository_url}:latest"
   role          = var.lambda_role
 }
+
+output "SqsProductionQueueUrl" {
+  value = aws_sqs_queue.fast_food_payment_queue.url
+}
