@@ -52,10 +52,33 @@ module "FastFoodPayment" {
 module "FastFoodProduction" {
   source = "./FastFoodProduction"
 
+  access_key_id         = module.AccessUser.access_key_id
+  secret_access_key     = module.AccessUser.secret_access_key
+  lambda_role           = module.AccessUser.lambda_role
+  SqsLogQueueGroupId    = module.FastFoodLogs.SqsLogQueueGroupId
+  SqsLogQueueUrl        = module.FastFoodLogs.SqsLogQueueUrl
+  SqsProductionQueueUrl = module.FastFoodPayment.SqsProductionQueueUrl
+}
+
+module "FastFoodTotem" {
+  source = "./FastFoodTotem"
+
+  SqsLogQueueUrl     = module.FastFoodLogs.SqsLogQueueUrl
+  SqsLogQueueGroupId = module.FastFoodLogs.SqsLogQueueGroupId
+  PaymentServiceUrl  = ""
   access_key_id      = module.AccessUser.access_key_id
   secret_access_key  = module.AccessUser.secret_access_key
   lambda_role        = module.AccessUser.lambda_role
-  SqsLogQueueGroupId = module.FastFoodLogs.SqsLogQueueGroupId
-  SqsLogQueueUrl     = module.FastFoodLogs.SqsLogQueueUrl
-  SqsProductionQueueUrl = module.FastFoodPayment.SqsProductionQueueUrl
+
 }
+
+
+module "UserApiGateway" {
+  source = "./UserApiGateway"
+}
+
+
+module "EmployeeApiGateway" {
+  source = "./EmployeeApiGateway"
+}
+
