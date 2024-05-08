@@ -78,16 +78,6 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 
-# resource "aws_db_parameter_group" "pg_rds" {
-#   name   = "pg_rds"
-#   family = "postgres14"
-
-#   parameter {
-#     name  = "log_connections"
-#     value = "1"
-#   }
-# }
-
 ### SUBINDO RDS
 
 resource "aws_db_instance" "rds-mssql" {
@@ -158,4 +148,20 @@ resource "aws_lambda_function" "fast_food_totem_management" {
   function_name = "FastFoodTotem"
   image_uri     = "${aws_ecr_repository.fast_food_totem.repository_url}:latest"
   role          = var.lambda_role
+}
+
+output "security_group_id" {
+  value = aws_security_group.rds_sg.id
+}
+
+output "public_subnets_ids" {
+  value = module.vpc.public_subnets
+}
+
+output "lambda_arn_fast_food_totem" {
+  value = aws_lambda_function.fast_food_totem_management.invoke_arn
+}
+
+output "lambda_name_fast_food_totem" {
+  value = aws_lambda_function.fast_food_totem_management.function_name
 }

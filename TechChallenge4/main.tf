@@ -75,6 +75,15 @@ module "FastFoodTotem" {
 
 module "UserApiGateway" {
   source = "./UserApiGateway"
+
+  cognito_user_pool_id        = module.FastFoodUserManagement.cognito_user_pool_id
+  cognito_user_pool_client_id = module.FastFoodUserManagement.cognito_user_pool_client_id
+  security_group_id           = module.FastFoodTotem.security_group_id
+  public_subnets_ids          = module.FastFoodTotem.public_subnets_ids
+  lambda_arn                  = module.FastFoodUserManagement.lambda_arn
+  lambda_name                 = module.FastFoodUserManagement.lambda_name
+  lambda_arn_fast_food_totem  = module.FastFoodTotem.lambda_arn_fast_food_totem
+  lambda_name_fast_food_totem = module.FastFoodTotem.lambda_name_fast_food_totem
 }
 
 
