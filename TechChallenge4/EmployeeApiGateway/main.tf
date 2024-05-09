@@ -102,6 +102,15 @@ resource "aws_apigatewayv2_route" "lambda_route_totem_order_getallorders" {
   authorization_type = "JWT"
 }
 
+resource "aws_apigatewayv2_route" "lambda_route_totem_product" {
+  depends_on         = [aws_apigatewayv2_api.ApiGateway, aws_apigatewayv2_integration.lambda_integration_totem, aws_apigatewayv2_authorizer.jwt_authorizer]
+  api_id             = aws_apigatewayv2_api.ApiGateway.id
+  route_key          = "ANY /v1/Product/{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.lambda_integration_totem.id}"
+  authorizer_id      = aws_apigatewayv2_authorizer.jwt_authorizer.id
+  authorization_type = "JWT"
+}
+
 
 ######## EMPLOYEE
 
@@ -172,6 +181,15 @@ resource "aws_apigatewayv2_stage" "ApiGatewayStage" {
 }
 
 ##################################### PERMISSIONS
+
+resource "aws_lambda_permission" "apigateway_invoke_lambda_totem" {
+  depends_on    = [aws_apigatewayv2_api.ApiGateway]
+  statement_id  = "AllowExecutionFromAPIGateway_Employees"
+  action        = "lambda:InvokeFunction"
+  function_name = var.lambda_name_fast_food_totem
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.ApiGateway.execution_arn}/*/*/*/*"
+}
 
 resource "aws_lambda_permission" "apigateway_invoke_lambda_employee" {
   depends_on    = [aws_apigatewayv2_api.ApiGateway]
