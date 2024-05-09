@@ -10,7 +10,7 @@ resource "aws_apigatewayv2_api" "ApiGateway" {
 resource "aws_apigatewayv2_authorizer" "jwt_authorizer" {
   depends_on      = [aws_apigatewayv2_api.ApiGateway]
   api_id          = aws_apigatewayv2_api.ApiGateway.id
-  name            = "jwt_authorizer"
+  name            = "jwt_authorizer_users"
   authorizer_type = "JWT"
   identity_sources = [
     "$request.header.Authorization"
@@ -50,12 +50,16 @@ resource "aws_apigatewayv2_integration" "lambda_integration_totem" {
 
 ##################################### ROUTES
 
+######## USER
+
 resource "aws_apigatewayv2_route" "lambda_route" {
   depends_on = [aws_apigatewayv2_api.ApiGateway, aws_apigatewayv2_integration.lambda_integration, aws_apigatewayv2_authorizer.jwt_authorizer]
   api_id     = aws_apigatewayv2_api.ApiGateway.id
   route_key  = "ANY /User/{proxy+}"
   target     = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
+
+######## TOTEM
 
 resource "aws_apigatewayv2_route" "lambda_route_totem_product" {
   depends_on         = [aws_apigatewayv2_api.ApiGateway, aws_apigatewayv2_integration.lambda_integration_totem, aws_apigatewayv2_authorizer.jwt_authorizer]

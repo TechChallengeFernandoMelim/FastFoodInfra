@@ -65,3 +65,11 @@ resource "aws_lambda_function" "fast_food_production_management" {
   image_uri     = "${aws_ecr_repository.fast_food_production.repository_url}:latest"
   role          = var.lambda_role
 }
+
+output "lambda_arn_production" {
+  value = aws_lambda_function.fast_food_production_management.invoke_arn
+}
+
+output "lambda_name_production" {
+  value = aws_lambda_function.fast_food_production_management.function_name
+}

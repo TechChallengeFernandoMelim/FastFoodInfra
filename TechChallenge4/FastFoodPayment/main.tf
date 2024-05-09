@@ -84,3 +84,11 @@ resource "aws_lambda_function" "fast_food_payment_management" {
 output "SqsProductionQueueUrl" {
   value = aws_sqs_queue.fast_food_payment_queue.url
 }
+
+output "lambda_arn_payment" {
+  value = aws_lambda_function.fast_food_payment_management.invoke_arn
+}
+
+output "lambda_name_payment" {
+  value = aws_lambda_function.fast_food_payment_management.function_name
+}

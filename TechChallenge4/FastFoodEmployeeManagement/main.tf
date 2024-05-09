@@ -42,7 +42,7 @@ resource "aws_cognito_user_pool" "FastFoodEmployees" {
   }
 }
 
-resource "aws_cognito_user_pool_client" "FastFoodTotem" {
+resource "aws_cognito_user_pool_client" "FastFoodTotemEmployees" {
   depends_on      = [aws_cognito_user_pool.FastFoodEmployees]
   name            = var.app_client_name
   user_pool_id    = aws_cognito_user_pool.FastFoodEmployees.id
@@ -98,7 +98,7 @@ resource "aws_lambda_function" "fast_food_employees_management" {
       AWS_SECRET_KEY_DYNAMO = var.secret_access_key
       AWS_TABLE_NAME_DYNAMO = var.dynamo_table_name
       AWS_EMPLOYEE_POOL_ID  = aws_cognito_user_pool.FastFoodEmployees.id
-      AWS_CLIENT_ID_COGNITO = aws_cognito_user_pool_client.FastFoodTotem.id
+      AWS_CLIENT_ID_COGNITO = aws_cognito_user_pool_client.FastFoodTotemEmployees.id
       AWS_SQS               = var.SqsLogQueueUrl
       AWS_SQS_GROUP_ID      = var.SqsLogQueueGroupId
     }
@@ -110,4 +110,20 @@ resource "aws_lambda_function" "fast_food_employees_management" {
   function_name = "FastFoodEmployeeManagement"
   image_uri     = "${aws_ecr_repository.fast_food_employees.repository_url}:latest"
   role          = var.lambda_role
+}
+
+output "cognito_user_pool_id" {
+  value = aws_cognito_user_pool.FastFoodEmployees.id
+}
+
+output "cognito_user_pool_client_id" {
+  value = aws_cognito_user_pool_client.FastFoodTotemEmployees.id
+}
+
+output "lambda_arn_employee" {
+  value = aws_lambda_function.fast_food_employees_management.invoke_arn
+}
+
+output "lambda_name_employee" {
+  value = aws_lambda_function.fast_food_employees_management.function_name
 }
