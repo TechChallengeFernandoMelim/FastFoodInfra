@@ -1,0 +1,506 @@
+{
+	"info": {
+		"_postman_id": "443d6881-3739-44fe-9888-4719b727fc45",
+		"name": "FastFoodTotem - Jornada dos Usuários",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13125005"
+	},
+	"item": [
+		{
+			"name": "Jornada do cliente",
+			"item": [
+				{
+					"name": "0 - Cadastro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Fernando\",\r\n  \"email\": \"fernando.fernando@fernando.fernando\",\r\n  \"identification\": \"625.428.240-29\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_users}}/User/CreateUser",
+							"host": [
+								"{{url_users}}"
+							],
+							"path": [
+								"User",
+								"CreateUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1 - Login com CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_users}}/User/AuthenticateUser/625.428.240-29",
+							"host": [
+								"{{url_users}}"
+							],
+							"path": [
+								"User",
+								"AuthenticateUser",
+								"625.428.240-29"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1 - Acesso Anônimo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_users}}/User/AuthenticateAsGuest",
+							"host": [
+								"{{url_users}}"
+							],
+							"path": [
+								"User",
+								"AuthenticateAsGuest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - Get Burguers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_users}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_users}}/v1/Product/category/1",
+							"host": [
+								"{{url_users}}"
+							],
+							"path": [
+								"v1",
+								"Product",
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - Get Acompanhamentos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_users}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_users}}/v1/Product/category/2",
+							"host": [
+								"{{url_users}}"
+							],
+							"path": [
+								"v1",
+								"Product",
+								"category",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - Get Bebidas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_users}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_users}}/v1/Product/category/3",
+							"host": [
+								"{{url_users}}"
+							],
+							"path": [
+								"v1",
+								"Product",
+								"category",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 - Envio Pedido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_users}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userCpf\": \"\",\r\n    \"userName\": \"\",\r\n    \"orderedItems\": [\r\n        {\r\n            \"productId\": 1,\r\n            \"amount\": 3\r\n        },\r\n        {\r\n            \"productId\": 7,\r\n            \"amount\": 3\r\n        },\r\n        {\r\n            \"productId\": 14,\r\n            \"amount\": 3\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_users}}/v1/Order",
+							"host": [
+								"{{url_users}}"
+							],
+							"path": [
+								"v1",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6 - Fake Checkout(simulando pagamento, recebimento webhook mercado pago e movendo status do pedido)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_users}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url_employees}}/UpdatePayment/68db8db2-d0b9-469c-8b28-355e434cc49e",
+							"host": [
+								"{{url_employees}}"
+							],
+							"path": [
+								"UpdatePayment",
+								"68db8db2-d0b9-469c-8b28-355e434cc49e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jornada da lanchonete",
+			"item": [
+				{
+					"name": "7 - Cadastrar Funcionario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"joao\",\r\n    \"email\": \"joao@joao\",\r\n    \"password\": \"12345678911\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_employees}}/Employee/CreateEmployee",
+							"host": [
+								"{{url_employees}}"
+							],
+							"path": [
+								"Employee",
+								"CreateEmployee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 - Logar com funcionário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_employees}}/Employee/AuthenticateEmployee?Email=joao@joao&Password=12345678911",
+							"host": [
+								"{{url_employees}}"
+							],
+							"path": [
+								"Employee",
+								"AuthenticateEmployee"
+							],
+							"query": [
+								{
+									"key": "Email",
+									"value": "joao@joao"
+								},
+								{
+									"key": "Password",
+									"value": "12345678911"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9 - Obter próximo pedido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_employees}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_employees}}/GetNextOrder",
+							"host": [
+								"{{url_employees}}"
+							],
+							"path": [
+								"GetNextOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10 - Visualizar dados dos pedidos pendentes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_employees}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_employees}}/GetAllPendingOrders",
+							"host": [
+								"{{url_employees}}"
+							],
+							"path": [
+								"GetAllPendingOrders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11 - Mudando status do pedido para \"Em preparação\"",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_employees}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"status\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_employees}}/ChangeStatus/68db8db2-d0b9-469c-8b28-355e434cc49e/Preparing",
+							"host": [
+								"{{url_employees}}"
+							],
+							"path": [
+								"ChangeStatus",
+								"68db8db2-d0b9-469c-8b28-355e434cc49e",
+								"Preparing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12 - Mudando status do pedido para \"Pronto\"",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_employees}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"status\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_employees}}/ChangeStatus/68db8db2-d0b9-469c-8b28-355e434cc49e/Ready",
+							"host": [
+								"{{url_employees}}"
+							],
+							"path": [
+								"ChangeStatus",
+								"68db8db2-d0b9-469c-8b28-355e434cc49e",
+								"Ready"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "13 - Mudando status do pedido para \"Finalizado\"",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_employees}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"status\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_employees}}/ChangeStatus/68db8db2-d0b9-469c-8b28-355e434cc49e/Finished",
+							"host": [
+								"{{url_employees}}"
+							],
+							"path": [
+								"ChangeStatus",
+								"68db8db2-d0b9-469c-8b28-355e434cc49e",
+								"Finished"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_users",
+			"value": "https://n46t39j8i1.execute-api.us-east-1.amazonaws.com/ApiGatewayStage",
+			"type": "string"
+		},
+		{
+			"key": "url_employees",
+			"value": "https://s032a8j8qf.execute-api.us-east-1.amazonaws.com/ApiGatewayStage",
+			"type": "string"
+		},
+		{
+			"key": "token_users",
+			"value": "eyJraWQiOiJhWm96YjFodk5cLzR5NVwvMzFud2F1MGJZZ3grU0x0MU1WdVE0T2RZXC9qcmJBPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIxNGY4MDRlOC1mMGIxLTcwMTEtNjYwNS1iN2IyZWIzMzA2Y2YiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9OdXoweEdxUjYiLCJjb2duaXRvOnVzZXJuYW1lIjoiMTRmODA0ZTgtZjBiMS03MDExLTY2MDUtYjdiMmViMzMwNmNmIiwib3JpZ2luX2p0aSI6Ijc4ZjU1ZjQ2LTlkY2YtNDg2MS1iZmQ4LWIxOGFhODA0MjZiNSIsImF1ZCI6IjR0bmZuajdhaG5mdGZjaHAzanN2MnBkaGVuIiwiZXZlbnRfaWQiOiIyYmNmYmNjYi1lNWU1LTQ2NDItODAwYS1hZGRmZTU4ZjE2ZGMiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTcxNTIyNDE3MiwiZXhwIjoxNzE1MjI3NzcyLCJpYXQiOjE3MTUyMjQxNzIsImp0aSI6ImRiNzExNzYxLTgxNWUtNDJlZi1iMTYyLWExZjJjODE1NTk0MSIsImVtYWlsIjoiZmVybmFuZG8uZmVybmFuZG9AZmVybmFuZG8uZmVybmFuZG8ifQ.EVAqMvEYyHfa6fWERZEa2iI9MYvCpJ7P05SdYApurS0Vp9LDgE3jbE6wqcEoavB0FblGnUVs8j3kT8kJdvLsAJYiCmdtt-x8j9IB6blN902L_VQfk7_Tcdi3aXS5yNjQpw3PEYfuTmhuSOJyHe_mV2JyEoH_HU7GlZGhmLejggr8PES-4F0ZFs0ZxjY3s2kgYSs87xnFoOJHycsxzicGF6oiL5Uh6-bOdM2muxIvJz4-Za_LpvNJup9ih5GqivV4fqmA-WPDB6bjqNCNvsJBghBQEqPsxfPm33abIjYObPZzGa8oAjn1RTaqiIxhkaVngDv-Q0LsLFZ777WRSJ5LTw",
+			"type": "string"
+		},
+		{
+			"key": "token_employees",
+			"value": "eyJraWQiOiJhK0tKT3B3STJ2NUZCWGh2TjdlQUZsM0JhVDcxdUVjWXZxNTY4eDZWd0N3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJjNDI4ZDQ3OC0yMGQxLTcwNzQtM2U5ZC04ZWU5MmI2ZDc5M2YiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9RRjB3Z2JBaVIiLCJjb2duaXRvOnVzZXJuYW1lIjoiYzQyOGQ0NzgtMjBkMS03MDc0LTNlOWQtOGVlOTJiNmQ3OTNmIiwib3JpZ2luX2p0aSI6ImIyOWQ0YWY4LWNiNzUtNDg2My04MTM5LTcwNDFlNjQwMzQwMSIsImF1ZCI6IjZrMHV1ZGlwdXBxN281N25rNm1rOXRoM21mIiwiZXZlbnRfaWQiOiI3MzMyNWFiYi01NTM5LTRmOTYtYmE4MS1lMjBmNTgyOTM4OGMiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTcxNTIyNDM3MywiZXhwIjoxNzE1MjI3OTczLCJpYXQiOjE3MTUyMjQzNzMsImp0aSI6IjdkZWU4YTFkLTY4ZmYtNDU3OS05OGRjLWM4ZjEyMWJjNmQwNiIsImVtYWlsIjoiam9hb0Bqb2FvIn0.hs9FOyTmBVndUVFm8iM4nBvAcwNWS9fK4ddpKiq5UbItjGdItdEAd9xBKjStyXQ9L-B0q3oJ1vMDV_WnNEl_WMkc16pijONGz3vt8TBzGFC9nTZ8wcg0bzKf2xI45g8JBsoc6j1qHMQpespW-EIgeN6maN8CQEB3MjEVbvg4VxPJLxeqROl2KENQwJoQmG189WCouP6A2dvh4B9pM4Z5wPZqVWu6ZPJtuh54A52J76jZeQBUMcnyEmUAwC849wIbgbo7afwg-UX29kv6urfvFzukr0jp8s3KJtIcVqjS1TSYowP-ln9KDk3Ge_hTLhQHzTiElW1envEMoxcubvP7gQ",
+			"type": "string"
+		}
+	]
+}
