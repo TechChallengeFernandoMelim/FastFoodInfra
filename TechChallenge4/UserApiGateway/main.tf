@@ -79,6 +79,15 @@ resource "aws_apigatewayv2_route" "lambda_route_totem_order" {
   authorization_type = "JWT"
 }
 
+resource "aws_apigatewayv2_route" "lambda_route_totem_order_delete_user" {
+  depends_on         = [aws_apigatewayv2_api.ApiGateway, aws_apigatewayv2_integration.lambda_integration_totem, aws_apigatewayv2_authorizer.jwt_authorizer]
+  api_id             = aws_apigatewayv2_api.ApiGateway.id
+  route_key          = "DELETE /v1/Order/DeleteUserData/{cpf}"
+  target             = "integrations/${aws_apigatewayv2_integration.lambda_integration_totem.id}"
+  authorizer_id      = aws_apigatewayv2_authorizer.jwt_authorizer.id
+  authorization_type = "JWT"
+}
+
 ##################################### STAGE
 
 resource "aws_apigatewayv2_stage" "ApiGatewayStage" {
