@@ -25,3 +25,6 @@ variable "lambda_arn" {}
 variable "lambda_name" {}
 variable "lambda_arn_fast_food_totem" {}
 variable "lambda_name_fast_food_totem" {}
+
+variable "delete_lambda_arn" {}
+variable "delete_lambda_name" {}

@@ -72,6 +72,16 @@ module "FastFoodTotem" {
 
 }
 
+module "DeleteUserInfoSaga" {
+  source = "./DeleteUserInfoSaga"
+
+  SqsLogQueueUrl     = module.FastFoodLogs.SqsLogQueueUrl
+  SqsLogQueueGroupId = module.FastFoodLogs.SqsLogQueueGroupId
+  access_key_id      = module.AccessUser.access_key_id
+  secret_access_key  = module.AccessUser.secret_access_key
+  lambda_role        = module.AccessUser.lambda_role
+}
+
 
 module "UserApiGateway" {
   source = "./UserApiGateway"
@@ -84,6 +94,8 @@ module "UserApiGateway" {
   lambda_name                 = module.FastFoodUserManagement.lambda_name
   lambda_arn_fast_food_totem  = module.FastFoodTotem.lambda_arn_fast_food_totem
   lambda_name_fast_food_totem = module.FastFoodTotem.lambda_name_fast_food_totem
+  delete_lambda_arn = module.DeleteUserInfoSaga.lambda_arn_delete
+  delete_lambda_name = module.DeleteUserInfoSaga.lambda_name_delete
 }
 
 

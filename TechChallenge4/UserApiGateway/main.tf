@@ -48,7 +48,27 @@ resource "aws_apigatewayv2_integration" "lambda_integration_totem" {
   payload_format_version = "2.0"
 }
 
+resource "aws_apigatewayv2_integration" "lambda_integration_delete_user" {
+  depends_on             = [aws_apigatewayv2_api.ApiGateway]
+  api_id                 = aws_apigatewayv2_api.ApiGateway.id
+  integration_type       = "AWS_PROXY"
+  integration_method     = "POST"
+  integration_uri        = var.delete_lambda_arn
+  payload_format_version = "2.0"
+}
+
 ##################################### ROUTES
+
+######## DELETE USER
+
+resource "aws_apigatewayv2_route" "lambda_route_delete_user" {
+  depends_on         = [aws_apigatewayv2_api.ApiGateway, aws_apigatewayv2_integration.lambda_integration_delete_user, aws_apigatewayv2_authorizer.jwt_authorizer]
+  api_id             = aws_apigatewayv2_api.ApiGateway.id
+  route_key          = "DELETE /DeleteUserData/{cpf}"
+  target             = "integrations/${aws_apigatewayv2_integration.lambda_integration_delete_user.id}"
+  authorizer_id      = aws_apigatewayv2_authorizer.jwt_authorizer.id
+  authorization_type = "JWT"
+}
 
 ######## USER
 
@@ -113,6 +133,15 @@ resource "aws_lambda_permission" "apigateway_invoke_lambda_totem" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = var.lambda_name_fast_food_totem
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.ApiGateway.execution_arn}/*/*/*/*"
+}
+
+resource "aws_lambda_permission" "apigateway_invoke_lambda_delete_user" {
+  depends_on    = [aws_apigatewayv2_api.ApiGateway]
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = var.delete_lambda_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.ApiGateway.execution_arn}/*/*/*/*"
 }
