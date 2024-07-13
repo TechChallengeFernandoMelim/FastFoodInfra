@@ -55,6 +55,7 @@ resource "aws_lambda_function" "fast_food_production_management" {
       AWS_SQS_LOG           = var.SqsLogQueueUrl
       AWS_SQS_GROUP_ID_LOG  = var.SqsLogQueueGroupId
       AWS_SQS_PRODUCTION    = var.SqsProductionQueueUrl
+      PAYMENT_SERVICE_URL   = ""
     }
   }
   package_type  = "Image"

@@ -141,6 +141,15 @@ resource "aws_apigatewayv2_route" "lambda_route_totem_payment_update" {
   authorization_type = "JWT"
 }
 
+resource "aws_apigatewayv2_route" "lambda_route_totem_cancel_order_payment" {
+  depends_on         = [aws_apigatewayv2_api.ApiGateway, aws_apigatewayv2_integration.lambda_integration_payment, aws_apigatewayv2_authorizer.jwt_authorizer]
+  api_id             = aws_apigatewayv2_api.ApiGateway.id
+  route_key          = "PATCH /CancelOrderPayment/{in_store_order_id}"
+  target             = "integrations/${aws_apigatewayv2_integration.lambda_integration_payment.id}"
+  authorizer_id      = aws_apigatewayv2_authorizer.jwt_authorizer.id
+  authorization_type = "JWT"
+}
+
 ######## PRODUCTION
 
 
@@ -166,6 +175,15 @@ resource "aws_apigatewayv2_route" "lambda_route_totem_production_ChangeStatus" {
   depends_on         = [aws_apigatewayv2_api.ApiGateway, aws_apigatewayv2_integration.lambda_integration_production, aws_apigatewayv2_authorizer.jwt_authorizer]
   api_id             = aws_apigatewayv2_api.ApiGateway.id
   route_key          = "PATCH /ChangeStatus/{in_store_order_id}/{newStatus}"
+  target             = "integrations/${aws_apigatewayv2_integration.lambda_integration_production.id}"
+  authorizer_id      = aws_apigatewayv2_authorizer.jwt_authorizer.id
+  authorization_type = "JWT"
+}
+
+resource "aws_apigatewayv2_route" "lambda_route_totem_production_CancelOrder" {
+  depends_on         = [aws_apigatewayv2_api.ApiGateway, aws_apigatewayv2_integration.lambda_integration_production, aws_apigatewayv2_authorizer.jwt_authorizer]
+  api_id             = aws_apigatewayv2_api.ApiGateway.id
+  route_key          = "PATCH /CancelOrderProduction/{in_store_order_id}"
   target             = "integrations/${aws_apigatewayv2_integration.lambda_integration_production.id}"
   authorizer_id      = aws_apigatewayv2_authorizer.jwt_authorizer.id
   authorization_type = "JWT"

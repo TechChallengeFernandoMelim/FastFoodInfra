@@ -94,8 +94,8 @@ module "UserApiGateway" {
   lambda_name                 = module.FastFoodUserManagement.lambda_name
   lambda_arn_fast_food_totem  = module.FastFoodTotem.lambda_arn_fast_food_totem
   lambda_name_fast_food_totem = module.FastFoodTotem.lambda_name_fast_food_totem
-  delete_lambda_arn = module.DeleteUserInfoSaga.lambda_arn_delete
-  delete_lambda_name = module.DeleteUserInfoSaga.lambda_name_delete
+  delete_lambda_arn           = module.DeleteUserInfoSaga.lambda_arn_delete
+  delete_lambda_name          = module.DeleteUserInfoSaga.lambda_name_delete
 }
 
 
