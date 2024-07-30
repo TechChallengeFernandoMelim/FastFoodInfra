@@ -6,7 +6,7 @@ Gerenciar a infraestrutura necessária de um sistema que tem como finalidade ger
 
 ## Arquitetura Geral do Projeto
 
-![imagemArquitetura](VersaoFinalArquiteturaTechChallenge4.png)
+![imagemArquitetura](Fase5TechChallenge.png)
 
 Os repositórios que constam nessa arquitetura são:
 - [FastFoodUserManagement](https://github.com/TechChallengeFernandoMelim/FastFoodUserManagement): serviço responsável por autenticar o cliente da lanchonete, seja via CPF ou de forma anônima.
@@ -15,9 +15,18 @@ Os repositórios que constam nessa arquitetura são:
 - [FastFoodPayment](https://github.com/TechChallengeFernandoMelim/FastFoodPayment): serviço responsável por criar um pagamento de acordo com o pedido solicitado pelo cliente e por atualizar o mesmo quando for pago.
 - [FastFoodProduction](https://github.com/TechChallengeFernandoMelim/FastFoodProduction): serviço responsável por atender os pedidos já confirmados e pagos. Esse serviço é utilizado pelos funcionários da lanchonete.
 - [FastFoodLogs](https://github.com/TechChallengeFernandoMelim/FastFoodLogs): serviço resposável por lidar com os logs das exceções disparadas pelos serviços anteriores.
+- [DeleteUserInfoSaga](https://github.com/TechChallengeFernandoMelim/DeleteUserInfoSaga): saga orquestrada responsável por lidar com a exclusão dos dados dos cliente em uma ordem específica.
 
 A arquitetura completa será explicada no vídeo disponibilizado no PDF de envio do trabalho.
 
+## SAGA
+
+Foi implementada 2 tipos de SAGA, a orquestrada e a coreografada. A explicação sobre as sagas será feita no vídeo do trabalho.
+
+### Coreografada
+![sagacor](SAGACoreografada.png)
+### Orquestrada
+![sagaorq](SAGAOrquestrada.png)
 ## Como usar
 
 É necessário ter docker, terraform e o CLI da AWS na máquina local. O AWS CLI já deve estar configurado com o AccessKey e Secret para ter acesso à plataforma da AWS. O Docker deve estar sendo executado.
