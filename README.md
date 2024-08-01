@@ -21,7 +21,7 @@ A arquitetura completa será explicada no vídeo disponibilizado no PDF de envio
 
 ## SAGA
 
-Foi implementada 2 tipos de SAGA, a orquestrada e a coreografada. A explicação sobre as sagas será feita no vídeo do trabalho.
+Foram implementadas 2 tipos de SAGA, a orquestrada e a coreografada. A explicação sobre as sagas será feita no vídeo do trabalho.
 
 ### Coreografada
 ![sagacor](SAGACoreografada.png)
