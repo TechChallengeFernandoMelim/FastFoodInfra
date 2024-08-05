@@ -81,3 +81,22 @@ Alguns endpoints não estão expostos nessas etapas, pois não fazem parte do fl
 Como ferramenta de sonar, utilizei o sonarcloud em todos os repositórios. Todos os respositórios tem uma github action chamada "SonarCloud" que está configurada para ser executada toda vez que um pull request é aberto para a branch master/main e toda vez que algum merge é feito na branch main/master. Como fiz o trabalho sozinho, não realizei muitos pull requests, mas fiz um de teste no seguinte [link](https://github.com/TechChallengeFernandoMelim/FastFoodLogs/pull/2) apenas para mostrar o funcionamento. Através dele, é possível ver a análise do sonar. 
 
 Também configurei o SonarCloud para realizar a execução dos testes unitários e documentar a porcentagem de cobertura de código em todos os repositórios. O link para acessar o sonarcloud com as análises de todos os repositórios está [aqui](https://sonarcloud.io/organizations/techchallengefernandomelim/projects). 
+
+## OWAS ZAP
+
+### Listar/Exibir Cardápio
+
+Endpoints:
+
+- GET /v1/Product/category/1 (obter lanches(1)/acompanhamentos(2)/bebidas/(3) disponíveis): 
+  - Análise antes da alteração: Não foram encontradas vulnerabilidades(demonstrado no vídeo).
+
+### Realização do pedido e geração do pagamento
+
+Endpoint:
+- POST /v1/Order(esse endpoint faz os dois, realiza pedido e gera o QR code para pagamento): request POST não funcionou no OWASP ZAP.
+
+### Confirmação do pagamento (WebHook)
+
+Endpoint:
+- PATCH /UpdatePayment/{{mercado-pago-pedido-id}}: request PATCH não funcionou no OWASP ZAP.
